@@ -1,9 +1,11 @@
-
+import Navbar from "./components/layout/Navbar"
+import Footer from "./components/layout/Footer"
 function App() {
 
   return (
     <>
-      <h1 className="bg-blue-400 font-">hello world</h1>
+    <Navbar />
+    <Footer />
     </>
   )
 }
