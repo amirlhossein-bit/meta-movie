@@ -1,11 +1,24 @@
-:root {
+@import 'tailwindcss';
+
+
+
+@theme {
   --color-primary: #7300ff;
   --color-secondary: #1a0b28;
   --color-black: #000000;
   --color-white: #ffffff;
   --color-glass: #e6d7e433;
-  --star-color: #ffc700;
+  --color-star: #ffc700;
 }
+
+
+
+
+
+
+
+
+
 @font-face {
   font-family: "poppins";
   src: url("assets/Fonts/Poppins-Bold.woff2") format("woff2");
