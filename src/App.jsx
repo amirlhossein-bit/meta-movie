@@ -1,11 +1,9 @@
-import Navbar from "./components/layout/Navbar"
-import Footer from "./components/layout/Footer"
+import "../src/App.css"
+
 function App() {
 
   return (
     <>
-    <Navbar />
-    <Footer />
     </>
   )
 }
