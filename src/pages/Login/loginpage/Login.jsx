@@ -1,26 +1,35 @@
+import { useState } from "react";
 import background from "../../../assets/img/bg-Sign up.png";
 import { FaFacebookF } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 import { FaFacebookSquare } from "react-icons/fa";
 import { FaSquareXTwitter } from "react-icons/fa6";
 import { FaInstagramSquare } from "react-icons/fa";
+import LOGIN_SCHEMA from "./LoginSchema.js";
 function Login() {
-  // const ROUTE = [
-  //   {
-  //     name: "Login",
-  //     path: "/login",
-  //   },
-  //   {
-  //     name: "Signin",
-  //     path: "/signin",
-  //   },
-  //   {
-  //     name:"forgotPass",
-  //     path:"/forgotPass"
-  //   }
-  // ];
+const [email, setEmail] = useState("");
+const [password, setPassword] = useState("");
+
+
+const handleLogin = () => {
+  const result = LOGIN_SCHEMA.safeParse({
+    email,
+    password,
+  });
+
+  if (!result.success) {
+    console.log(result.error.format());
+    return;
+  }
+
+  console.log("Valid Data:", result.data);
+};
+
 
   return (
+
+
+
     <section className="relative w-screen h-screen ">
       {/* Background */}
 
@@ -41,7 +50,7 @@ function Login() {
           </p>
         </div>
 
-        <div className="w-full h-auto mt-4 flex justify-center">
+        <div className="w-full h-auto mt-4 flex justify-center px-2">
           <div className="w-2xs h-130 backdrop-blur-lg border-2 border-glass rounded-2xl md:w-96">
             <div className="flex justify-center mt-8 text-2xl gap-8 font-light">
               <span>Login </span>
@@ -67,11 +76,15 @@ function Login() {
             <div className="flex flex-col justify-center items-center mt-8 gap-4">
               <input
                 type="email"
+                value={email}
+                onChange={(e)=> setEmail(e.target.value)}
                 placeholder="Email Address"
                 className="px-6 py-2 border-2 border-glass rounded-md focus:border-primary focus:outline-none transition  "
               />
               <input
-                type="email"
+                type="password"
+                value={password}
+                onChange={(e)=> setPassword(e.target.value)}
                 placeholder="Password"
                 className="px-6 py-2 border-2 border-glass rounded-md focus:border-primary focus:outline-none transition"
               />
@@ -87,7 +100,7 @@ function Login() {
               <p>Forget Password</p>
             </div>
             <div className="flex justify-center items-center mt-8 ">
-              <button className="bg-primary w-3/4 px-6 py-2 rounded-sm">
+              <button className="bg-primary w-3/4 px-6 py-2 rounded-sm" onClick={handleLogin}>
                 Login
               </button>
             </div>
