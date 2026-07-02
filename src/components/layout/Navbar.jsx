@@ -1,95 +1,115 @@
-import { Link , NavLink } from "react-router-dom";
-import { useState } from "react";
+import { Link, NavLink } from "react-router-dom";
+import { useEffect, useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import { HiMenu } from "react-icons/hi";
 import { CgClose } from "react-icons/cg";
-const Navbar = () => {
 
-    const [isOpen , setIsOpen] = useState(false) ; 
+function Navbar() {
+  const [isOpen, setIsOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
 
-    const navItem = [
-        {path : '/' , lable: 'home'} ,
-        {path : '/upcoming' , lable: 'upcoming'} ,
-        {path : '/shows' , lable: 'shows'} , 
-        {path : '/plans' , lable: 'plans'} , 
-        {path : '/community' , lable: 'community'} , 
-        {path : '/account' , lable: 'account'}
-    ]
-     return (
-      <>
-         <div className="flex justify-between md:justify-start px-5 bg-transparent items-center h-20 relative z-50">
-            <div className="flex items-center md:px-4">
-               <Link className="whitespace-nowrap font-bold text-xl md:text-3xl text-black">
-                    Meta Movie
-               </Link>
-            </div>
+  const navItems = [
+    { path: "/", label: "Home" },
+    { path: "/upcoming", label: "Upcoming" },
+    { path: "/shows", label: "Shows" },
+    { path: "/plans", label: "Plans" },
+    { path: "/community", label: "Community" },
+    { path: "/account", label: "Account" },
+  ];
 
-            <div className="hidden md:flex font-light text-xl items-center space-x-16 px-10">
-               {navItem.map((item) => (
-                  <NavLink
-                     key={item.path}
-                     to={item.path}
-                     className={({ isActive }) =>
-                        `text-black hover:text-yellow-300 transition-colors ${
-                           isActive ? 'text-yellow-300 font-bold' : ''
-                        }`
-                     }
-                  >
-                     {item.lable}
-                  </NavLink>
-               ))}
-               <FaSearch className="font-light cursor-pointer text-black hover:text-yellow-300 transition-colors text-2xl" />
-            </div>
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 80);
+    };
 
-            <button
-               onClick={() => setIsOpen(true)}
-               className="md:hidden text-white text-3xl"
-            >
-               <HiMenu />
-            </button>
-         </div>
+    window.addEventListener("scroll", handleScroll);
 
-         <>
-            <div
-               className={`fixed inset-0 bg-black/60 backdrop-blur-sm z-40 transition-opacity duration-500 ${
-                  isOpen ? 'opacity-100 visible' : 'opacity-0 invisible'
-               }`}
-               onClick={() => setIsOpen(false)}
-            />
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
-            <div
-               className={`fixed top-0 right-0 h-full w-72 bg-gray-800 shadow-2xl z-50 flex flex-col p-6 transition-all duration-500 ease-out ${
-                  isOpen ? 'translate-x-0' : 'translate-x-full'
-               }`}
-            >
-               <button
-                  onClick={() => setIsOpen(false)}
-                  className="self-end text-white text-3xl hover:rotate-90 transition-transform duration-300"
-               >
-                  <CgClose />
-               </button>
+  return (
+    <>
+<header
+  className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ${
+    scrolled
+      ? "bg-[#0B0B0B]/95 backdrop-blur-md shadow-lg"
+      : "bg-transparent"
+  }`}
+>
+  <div className="container mx-auto h-20 px-4 sm:px-6 lg:px-8 flex items-center justify-between">
 
-]               <div className="flex flex-col items-start mt-10 space-y-6">
-                  {navItem.map((item) => (
-                     <NavLink
-                        key={item.path}
-                        to={item.path}
-                        onClick={() => setIsOpen(false)}
-                        className={({ isActive }) =>
-                           `text-white text-2xl hover:text-yellow-400 transition-colors ${
-                              isActive ? 'text-yellow-400 font-bold' : ''
-                           }`
-                        }
-                     >
-                        {item.lable}
-                     </NavLink>
-                  ))}
-                  <FaSearch className="text-white text-2xl cursor-pointer hover:text-yellow-400 transition-colors" />
-               </div>
-            </div>
-         </>
-      </>
-   );
+    <Link to="/" className="shrink-0">
+      <h1 className="text-2xl sm:text-3xl font-bold text-white whitespace-nowrap">
+        <span className="text-primary">M</span>eta Movie
+      </h1>
+    </Link>
+
+    <nav className="hidden xl:flex items-center gap-4 lg:gap-6 xl:gap-8">
+
+      {navItems.map((item) => (
+        <NavLink
+          key={item.path}
+          to={item.path}
+          className={({ isActive }) =>
+            `text-base xl:text-lg text-white transition ${
+              isActive ? "text-primary" : "hover:text-primary"
+            }`
+          }
+        >
+          {item.label}
+        </NavLink>
+      ))}
+
+      <FaSearch className="text-xl xl:text-2xl text-white cursor-pointer hover:text-primary transition" />
+
+    </nav>
+
+    <button
+      onClick={() => setIsOpen(true)}
+      className="xl:hidden text-white text-3xl"
+    >
+      <HiMenu />
+    </button>
+
+  </div>
+</header>
+
+      <div
+        className={`fixed inset-0 bg-black/60 backdrop-blur-sm z-40 transition ${
+          isOpen ? "opacity-100 visible" : "opacity-0 invisible"
+        }`}
+        onClick={() => setIsOpen(false)}
+      />
+
+      <aside
+        className={`fixed top-0 right-0 w-72 h-screen bg-[#151515] z-50 transition-transform duration-500 ${
+          isOpen ? "translate-x-0" : "translate-x-full"
+        }`}
+      >
+        <div className="p-6">
+          <button
+            onClick={() => setIsOpen(false)}
+            className="text-white text-3xl ml-auto block"
+          >
+            <CgClose />
+          </button>
+
+          <div className="mt-10 flex flex-col gap-8">
+            {navItems.map((item) => (
+              <NavLink
+                key={item.path}
+                to={item.path}
+                onClick={() => setIsOpen(false)}
+                className="text-white text-xl hover:text-primary"
+              >
+                {item.label}
+              </NavLink>
+            ))}
+          </div>
+        </div>
+      </aside>
+    </>
+  );
 }
- 
+
 export default Navbar;

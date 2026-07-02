@@ -1,7 +1,7 @@
 import { useState } from "react";
 import background from "../../assets/img/bg-Sign up.png";
 import SIGNUP_SCHEMA from "./SignupSchema";
-
+import { NavLink } from "react-router-dom";
 const initialValues = {
   userName: "",
   email: "",
@@ -86,13 +86,33 @@ function Signup() {
         <div className="flex items-center justify-center mt-4">
           <form
             onSubmit={handleSubmit}
-            className="w-90 rounded-3xl border border-white/20 bg-white/10 p-8 backdrop-blur-xl mb-4"
+            className="w-80 rounded-3xl border border-white/20 bg-white/10 p-4 backdrop-blur-xl mb-4"
           >
             <div className="text-center">
-              <div className="flex justify-center text-2xl gap-8 font-light text-white">
-                <span className=" cursor-pointer">Login </span>
+              <div className="flex justify-center mt-8 text-2xl gap-8 font-light">
+                <NavLink
+                  to="/login"
+                  className={({ isActive }) =>
+                    isActive
+                      ? "text-primary font-bold"
+                      : "text-white hover:text-primary"
+                  }
+                >
+                  Login
+                </NavLink>
+
                 <span>|</span>
-                <span className=" cursor-pointer">Sign in</span>
+
+                <NavLink
+                  to="/signup"
+                  className={({ isActive }) =>
+                    isActive
+                      ? "text-primary font-bold"
+                      : "text-white hover:text-primary"
+                  }
+                >
+                  Sign up
+                </NavLink>
               </div>
 
               <p className="mt-2 text-sm text-white/70">
@@ -121,16 +141,7 @@ function Signup() {
               ))}
             </div>
 
-            <div className="mt-6 flex items-center justify-between text-sm text-white/70">
-              <label className="flex items-center gap-2 cursor-pointer select-none">
-                <input type="checkbox" />
-                Remember me
-              </label>
 
-              <button type="button" className="cursor-pointer hover:text-primary transition">
-                Forgot Password?
-              </button>
-            </div>
 
             <button
               type="submit"
@@ -138,8 +149,6 @@ function Signup() {
             >
               Create Account
             </button>
-
-
           </form>
         </div>
       </div>

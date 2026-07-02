@@ -1,121 +1,193 @@
 import { useState } from "react";
-import background from "../../../assets/img/bg-Sign up.png";
-import { FaFacebookF } from "react-icons/fa";
-import { FcGoogle } from "react-icons/fc";
-import { FaFacebookSquare } from "react-icons/fa";
+import { NavLink } from "react-router-dom";
+import {
+  FaFacebookF,
+  FaFacebookSquare,
+  FaInstagramSquare,
+} from "react-icons/fa";
 import { FaSquareXTwitter } from "react-icons/fa6";
-import { FaInstagramSquare } from "react-icons/fa";
-import LOGIN_SCHEMA from "./LoginSchema.js";
-function Login() {
-const [email, setEmail] = useState("");
-const [password, setPassword] = useState("");
+import { FcGoogle } from "react-icons/fc";
 
-
-const handleLogin = () => {
-  const result = LOGIN_SCHEMA.safeParse({
-    email,
-    password,
-  });
-
-  if (!result.success) {
-    console.log(result.error.format());
-    return;
-  }
-
-  console.log("Valid Data:", result.data);
+import background from "../../../assets/img/bg-Sign up.png";
+import LOGIN_SCHEMA from "./LoginSchema";
+const initialValues = {
+  email: "",
+  password: "",
 };
 
+const inputs = [
+  {
+    name: "email",
+    type: "email",
+    placeholder: "Email Address",
+  },
+  {
+    name: "password",
+    type: "password",
+    placeholder: "Password",
+  },
+];
+
+function Login() {
+  const [formData, setFormData] = useState(initialValues);
+  const [errors, setErrors] = useState({});
+
+  const handleChange = ({ target }) => {
+    setFormData((prev) => ({
+      ...prev,
+      [target.name]: target.value,
+    }));
+  };
+
+  const handleLogin = (e) => {
+    e.preventDefault();
+
+    const result = LOGIN_SCHEMA.safeParse(formData);
+
+    if (!result.success) {
+      setErrors(result.error.flatten().fieldErrors);
+      return;
+    }
+
+    setErrors({});
+    console.log(result.data);
+  };
 
   return (
-
-
-
-    <section className="relative w-screen h-screen ">
+    <section className="relative h-screen w-screen overflow-hidden">
       {/* Background */}
-
       <img
         src={background}
-        alt=""
-        className="absolute inset-0 w-full h-full object-cover backdrop-blur-2xl"
+        alt="Background"
+        className="absolute inset-0 h-full w-full object-cover"
       />
 
+      {/* Overlay */}
+      <div className="absolute inset-0 bg-black/20 backdrop-blur-[2px]" />
+
       {/* Content */}
-      <div className="md:grid grid-cols-2 relative z-10 flex flex-col items-center justify-center h-full text-white md:flex-row md:justify-between ">
-        <div className="text-center ml-4">
-          <h3 className="text-3xl font-bold md:text-5xl ">
+      <div className="relative z-10 grid h-full md:grid-cols-2">
+        {/* Left */}
+        <div className="flex flex-col items-center justify-center px-8 text-center text-white">
+          <h1 className="text-4xl font-bold md:text-6xl">
             <span className="text-primary">M</span>eta Movie
-          </h3>
-          <p className="font-bold text-xl text-center md:text-4xl mt-4">
-            The world’s Largest Movie Library{" "}
+          </h1>
+
+          <p className="mt-5 max-w-md text-xl font-semibold md:text-3xl">
+            The World's Largest Movie Library
           </p>
         </div>
 
-        <div className="w-full h-auto mt-4 flex justify-center px-2">
-          <div className="w-2xs h-130 backdrop-blur-lg border-2 border-glass rounded-2xl md:w-96">
-            <div className="flex justify-center mt-8 text-2xl gap-8 font-light">
-              <span>Login </span>
-              <span>|</span>
-              <span>Sign in</span>
-            </div>
-            <div className="font-light text-center mt-2 text-white/70">
-              Log in to watch your favourite shows
+        {/* Right */}
+        <div className="flex items-center justify-center mt-4">
+          <form
+            onSubmit={handleLogin}
+            className="w-80 rounded-3xl border border-white/20 bg-white/10 p-4 backdrop-blur-xl mb-4"
+          >
+            {/* Tabs */}
+            <div className="text-center">
+              <div className="flex justify-center mt-6 gap-8 text-2xl font-light">
+                <NavLink
+                  to="/login"
+                  className={({ isActive }) =>
+                    isActive
+                      ? "font-bold text-primary"
+                      : "text-white transition hover:text-primary"
+                  }
+                >
+                  Login
+                </NavLink>
+
+                <span>|</span>
+
+                <NavLink
+                  to="/signup"
+                  className={({ isActive }) =>
+                    isActive
+                      ? "font-bold text-primary"
+                      : "text-white transition hover:text-primary"
+                  }
+                >
+                  Sign up
+                </NavLink>
+              </div>
+
+              <p className="mt-2 text-sm text-white/70">
+                Log in to watch your favourite shows.
+              </p>
             </div>
 
-            <div className="flex justify-center gap-8 mt-8">
-              <div className="w-20 h-9 backdrop-blur-[1px] border border-glass flex justify-center items-center bg-white/10 rounded-lg">
-                <FcGoogle className="w-6 h-6" />
-              </div>
-              <div className="w-20 h-9 backdrop-blur-[1px] border border-glass flex justify-center items-center bg-white/10 rounded-lg">
+            {/* Social Login */}
+            <div className="mt-8 flex justify-center gap-6">
+              <button
+                type="button"
+                className="flex h-11 w-20 items-center justify-center rounded-lg border border-white/20 bg-white/10 transition hover:bg-white/20"
+              >
+                <FcGoogle className="text-2xl" />
+              </button>
+
+              <button
+                type="button"
+                className="flex h-11 w-20 items-center justify-center rounded-lg border border-white/20 bg-white/10 transition hover:bg-white/20"
+              >
                 <FaFacebookF />
-              </div>
-            </div>
-
-            <div className="text-center mt-8">
-              <span className="font-light">or</span>
-            </div>
-            <div className="flex flex-col justify-center items-center mt-8 gap-4">
-              <input
-                type="email"
-                value={email}
-                onChange={(e)=> setEmail(e.target.value)}
-                placeholder="Email Address"
-                className="px-6 py-2 border-2 border-glass rounded-md focus:border-primary focus:outline-none transition  "
-              />
-              <input
-                type="password"
-                value={password}
-                onChange={(e)=> setPassword(e.target.value)}
-                placeholder="Password"
-                className="px-6 py-2 border-2 border-glass rounded-md focus:border-primary focus:outline-none transition"
-              />
-            </div>
-            <div className="flex justify-center gap-4 font-light text-sm mt-4">
-              <div className="flex gap-2">
-                <input
-                  type="checkbox"
-                  className="appearance-none w-5 h-5 border border-glass rounded-full checked:bg-primary checked:border-primary"
-                />
-                <p>remember me</p>
-              </div>
-              <p>Forget Password</p>
-            </div>
-            <div className="flex justify-center items-center mt-8 ">
-              <button className="bg-primary w-3/4 px-6 py-2 rounded-sm" onClick={handleLogin}>
-                Login
               </button>
             </div>
-            <div className="flex justify-center items-center gap-8 mt-4">
-              <div>
-                <FaFacebookSquare className="w-7 h-7" />
-              </div>
-              <div>
-                <FaSquareXTwitter className="w-7 h-7" />
-              </div>
-              <div>
-                <FaInstagramSquare className="w-7 h-7" />
-              </div>
+
+            <p className="mt-6 text-center text-white/70">or</p>
+
+            {/* Inputs */}
+            <div className="mt-6 space-y-5">
+              {inputs.map(({ name, type, placeholder }) => (
+                <div key={name}>
+                  <input
+                    name={name}
+                    type={type}
+                    placeholder={placeholder}
+                    value={formData[name]}
+                    onChange={handleChange}
+                    className="w-full rounded-lg border border-white/20 bg-white/10 px-5 py-3 text-white placeholder:text-white/50 outline-none transition focus:border-primary"
+                  />
+
+                  {errors[name] && (
+                    <p className="mt-1 text-sm text-red-400">
+                      {errors[name][0]}
+                    </p>
+                  )}
+                </div>
+              ))}
             </div>
-          </div>
+
+            {/* Remember */}
+            <div className="mt-6 flex items-center justify-between text-sm text-white/70">
+              <label className="flex cursor-pointer items-center gap-2">
+                <input type="checkbox" />
+                Remember me
+              </label>
+
+              <NavLink
+                to="/forgetPassword"
+                className="transition hover:text-primary"
+              >
+                Forgot Password?
+              </NavLink>
+            </div>
+
+            {/* Submit */}
+            <button
+              type="submit"
+              className="mt-8 w-full rounded-lg bg-primary py-3 font-semibold text-white transition hover:opacity-90 active:scale-[0.98]"
+            >
+              Login
+            </button>
+
+            {/* Social Icons */}
+            <div className="mt-8 flex justify-center gap-8 text-2xl">
+              <FaFacebookSquare className="cursor-pointer transition hover:text-primary" />
+              <FaSquareXTwitter className="cursor-pointer transition hover:text-primary" />
+              <FaInstagramSquare className="cursor-pointer transition hover:text-primary" />
+            </div>
+          </form>
         </div>
       </div>
     </section>

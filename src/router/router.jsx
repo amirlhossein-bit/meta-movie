@@ -5,7 +5,7 @@ import AuthLayout from "../components/layout/AuthLayout";
 import HomePage from "../pages/Home/HomePage";
 import Login from './../pages/Login/loginpage/Login';
 import Signup from './../pages/Signup/Signup';
-
+import ForgotPass from "./../pages/Login/forgotpass/ForgotPass"
 
 export const router = createBrowserRouter([
   {
@@ -30,6 +30,10 @@ export const router = createBrowserRouter([
       {
         path: "/signup",
         element: <Signup />,
+      },
+      {
+        path: "/forgetPassword",
+        element: <ForgotPass />,
       },
     ],
   },
