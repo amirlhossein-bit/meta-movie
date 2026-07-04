@@ -1,14 +1,15 @@
 import MovieCarousel from "../../components/movie/MovieCarousel";
 import { movieService } from "../../services/movie.service";
 
-import MainHero from "./MainHero";
+import MainHero from "./components/MainHero";
 
 import GenreSec from "./components/genreSec";
 
 const HomePage = () => {
   return (
     <>
-      <div className="">
+
+      <div className="bg-black">
         <MainHero />
         <MovieCarousel
           fetchMovies={movieService.getUpcoming}
@@ -35,5 +36,6 @@ const HomePage = () => {
     </>
   );
 };
+
 
 export default HomePage;
