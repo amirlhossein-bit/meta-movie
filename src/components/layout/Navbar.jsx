@@ -30,10 +30,10 @@ function Navbar() {
   return (
     <>
 <header
-  className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ${
+  className={`md:fixed top-0 left-0 w-full z-50 transition-all duration-500 ${
     scrolled
-      ? "bg-[#0B0B0B]/40 backdrop-blur-md shadow-lg"
-      : "bg-transparent"
+      ? "bg-black md:bg-[#0B0B0B]/40 backdrop-blur-md shadow-lg"
+      : "bg-black md:bg-transparent"
   }`}
 >
   <div className="container mx-auto h-20 px-4 sm:px-6 lg:px-8 flex items-center justify-between">
@@ -44,14 +44,14 @@ function Navbar() {
       </h1>
     </Link>
 
-    <nav className="hidden xl:flex items-center gap-4 lg:gap-6 xl:gap-8">
+    <nav className="hidden md:flex items-center gap-4 lg:gap-6 md:gap-8">
 
       {navItems.map((item) => (
         <NavLink
           key={item.path}
           to={item.path}
           className={({ isActive }) =>
-            `text-base xl:text-lg text-white transition ${
+            `text-base md:text-lg text-white transition ${
               isActive ? "text-primary" : "hover:text-primary"
             }`
           }
@@ -60,13 +60,13 @@ function Navbar() {
         </NavLink>
       ))}
 
-      <FaSearch className="text-xl xl:text-2xl text-white cursor-pointer hover:text-primary transition" />
+      <FaSearch className="text-xl md:text-2xl text-white cursor-pointer hover:text-primary transition" />
 
     </nav>
 
     <button
       onClick={() => setIsOpen(true)}
-      className="xl:hidden text-white text-3xl"
+      className="md:hidden text-white text-3xl"
     >
       <HiMenu />
     </button>
