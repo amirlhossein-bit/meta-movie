@@ -32,7 +32,7 @@ function Navbar() {
 <header
   className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ${
     scrolled
-      ? "bg-[#0B0B0B]/95 backdrop-blur-md shadow-lg"
+      ? "bg-[#0B0B0B]/40 backdrop-blur-md shadow-lg"
       : "bg-transparent"
   }`}
 >
