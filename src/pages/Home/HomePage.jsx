@@ -5,23 +5,35 @@ import MainHero from "./MainHero";
 
 import GenreSec from "./components/genreSec";
 
-
 const HomePage = () => {
-
-    return ( 
+  return (
     <>
-    <div className="">
+      <div className="">
+        <MainHero />
+        <MovieCarousel
+          fetchMovies={movieService.getUpcoming}
+          title={"Popular"}
+        />
+        <MovieCarousel
+          fetchMovies={movieService.getNowPlaying}
+          title={"Latest Released"}
+        />
+        <MovieCarousel
+          fetchMovies={movieService.getTrending}
+          title={"Trending movies & shows"}
+        />
+        <MovieCarousel
+          fetchMovies={movieService.getTvPopular}
+          title={"Popular Tv Shows"}
+        />
+        <MovieCarousel
+          fetchMovies={movieService.getUpcoming}
+          title={"Upcoming"}
+        />
+        <GenreSec />
+      </div>
+    </>
+  );
+};
 
-        <MainHero/>
-    <MovieCarousel fetchMovies={movieService.getUpcoming} title={'Popular'} />
-    <MovieCarousel fetchMovies={movieService.getNowPlaying} title={'Latest Released'} /> 
-    <MovieCarousel fetchMovies={movieService.getTrending} title={'Trending movies & shows'} />
-    <MovieCarousel fetchMovies={movieService.getTvPopular} title={'Popular Tv Shows'} />
-    <MovieCarousel fetchMovies={movieService.getUpcoming} title={'Upcoming'} />
-    <GenreSec />
-
-    </div>
-    </> );
-}
- 
 export default HomePage;
